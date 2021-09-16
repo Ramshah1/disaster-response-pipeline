@@ -1,18 +1,16 @@
 import json
-import plotly
-import pandas as pd
-import joblib
 
+import joblib
+import pandas as pd
+import plotly
 from flask import Flask
 from flask import render_template, request
 from plotly.graph_objs import Bar, Pie
-
 from sqlalchemy import create_engine
 
 from utils.tokenizer_ import tokenize
 
 app = Flask(__name__)
-
 
 # load data
 engine = create_engine('sqlite:///../data/DisasterResponse.db')
