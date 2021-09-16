@@ -12,6 +12,8 @@ This project includes a web app where an emergency worker can input a new
 message and get classification results in several categories. 
 The web app will also display visualizations of the data. 
 
+The working project can be seen [here](http://ramshahjahangir.pythonanywhere.com/)
+
 ## Table of Contents
 1. [Installation](#installation)
 2. [Instructions](#instructions)
@@ -22,8 +24,7 @@ The web app will also display visualizations of the data.
 ## Installation
 ### Dependencies
 * Python >= 3.7
-* matplotlib >= 3.4.2
-* numpy >= 1.21.1
+* nltk >= 3.6.2
 * pandas >= 1.3.1
 * Flask >= 2.0.1
 
@@ -52,7 +53,7 @@ pip install -r requirements.txt
     - To run ML pipeline that trains classifier and saves
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
-2. Run the following command in the app's directory to run your web app.
+2. Run the following command in the app's directory to run your web app locally.
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
@@ -111,6 +112,10 @@ index of the web app.
 |- msg_category.png
 |- Msg_genre.png
 |- news_msg_category.png
+
+- utils
+|- __init__.py
+|- tokenizer_.py #tokenizer function as separate module for pickling and unpickling
 
 - README.md
 
