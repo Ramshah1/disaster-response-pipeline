@@ -3,33 +3,15 @@ import plotly
 import pandas as pd
 import joblib
 
-from nltk.stem import WordNetLemmatizer
-from nltk.tokenize import word_tokenize
-
 from flask import Flask
 from flask import render_template, request
 from plotly.graph_objs import Bar, Pie
 
 from sqlalchemy import create_engine
 
+from utils.tokenizer_ import tokenize
+
 app = Flask(__name__)
-
-
-def tokenize(text):
-    """
-    Creates tokens from sentences using WordNetLemmatizer
-    :param text: string
-    :return: list
-    """
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
 
 
 # load data

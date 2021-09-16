@@ -15,8 +15,7 @@ from sklearn.model_selection import GridSearchCV
 
 from sqlalchemy import create_engine
 
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
+from utils.tokenizer_ import tokenize
 
 nltk.download(['punkt', 'wordnet'])
 
@@ -36,23 +35,6 @@ def load_data(database_filepath):
     return X, Y, col_names
 
 
-def tokenize(text):
-    """
-    Creates tokens from sentences using WordNetLemmatizer
-    :param text: string
-    :return: list of tokens
-    """
-    tokens = word_tokenize(text)
-    lemmatizer = WordNetLemmatizer()
-
-    clean_tokens = []
-    for tok in tokens:
-        clean_tok = lemmatizer.lemmatize(tok).lower().strip()
-        clean_tokens.append(clean_tok)
-
-    return clean_tokens
-
-
 def build_model():
     """
     creates a model using Pipeline and trains on best hyperparameters
@@ -61,23 +43,24 @@ def build_model():
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer=tokenize)),
         ('tfidf', TfidfTransformer()),
-        ('clf', MultiOutputClassifier(RandomForestClassifier()))
+        ('clf', MultiOutputClassifier(RandomForestClassifier(n_estimators=5)))
     ])
 
     # This parameter list took too long to run and created a pickle file of
-    # more than 950 MBs
+    # more than 450 MBs
     # parameters = {
     #         'vect__max_df': (0.5, 0.75),
     #     'tfidf__use_idf': (True, False),
     #         'clf__estimator__n_estimators': [10, 50],
     # }
 
+    # using a small set of parameters so that pickle file is small
     parameters = {
         'vect__max_df': ([0.75]),
         'tfidf__use_idf': ([False]),
     }
 
-    cv = GridSearchCV(pipeline, param_grid=parameters, cv=3)
+    cv = GridSearchCV(pipeline, param_grid=parameters, cv=2)
     return cv
 
 
