@@ -6,12 +6,23 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    reads data from csv files and merges them into a single dataframe based on id
+    :param messages_filepath: string
+    :param categories_filepath: string
+    :return: dataframe
+    """
     messages = pd.read_csv(messages_filepath)
     categories = pd.read_csv(categories_filepath)
     return messages.merge(categories, how='outer', on='id')
 
 
 def clean_data(df):
+    """
+    cleans the category column, removes duplicates
+    :param df: dataframe
+    :return: dataframe
+    """
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';', expand=True)
 
@@ -51,6 +62,12 @@ def clean_data(df):
 
 
 def save_data(df, database_filename):
+    """
+    saves dataframe to sqlite database
+    :param df: dataframe
+    :param database_filename: string
+    :return: None
+    """
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('clean_messages', engine, index=False)
 
@@ -73,8 +90,8 @@ def main():
         print('Cleaned data saved to database!')
 
     else:
-        print('Please provide the filepaths of the messages and categories ' 
-              'datasets as the first and second argument respectively, as ' 
+        print('Please provide the filepaths of the messages and categories '
+              'datasets as the first and second argument respectively, as '
               'well as the filepath of the database to save the cleaned data '
               'to as the third argument. \n\nExample: python process_data.py '
               'disaster_messages.csv disaster_categories.csv '
