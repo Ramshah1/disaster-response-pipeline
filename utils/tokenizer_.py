@@ -1,6 +1,7 @@
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
+
 def tokenize(text):
     """
     Creates tokens from sentences using WordNetLemmatizer
