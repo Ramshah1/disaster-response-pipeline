@@ -12,7 +12,7 @@ This project includes a web app where an emergency worker can input a new
 message and get classification results in several categories. 
 The web app will also display visualizations of the data. 
 
-The working project can be seen [here](http://ramshahjahangir.pythonanywhere.com/)
+The working project can be seen [here](http://ramshahjahangir.pythonanywhere.com/).
 
 ## Table of Contents
 1. [Installation](#installation)
@@ -46,17 +46,23 @@ pip install -r requirements.txt
 ``
 
 ## Instructions
-1. Run the following commands in the project's root directory to set up your database and model.
+1. To access the `utils` module, set the `PYTHONPATH` environment variable
+   - `cd` to `disaster-response-pipeline` folder and find the working directory path\
+     `pwd`
+      
+   - copy the path returned and set the environment variable\
+       `export PYTHONPATH="${PYTHONPATH}:your_path_here"`
+2. Run the following commands in the project's root directory to set up your database and model.
 
-    - To run ETL pipeline that cleans data and stores in database
+    - To run ETL pipeline that cleans data and stores in database\
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
-    - To run ML pipeline that trains classifier and saves
+    - To run ML pipeline that trains classifier and saves\
         `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
-2. Run the following command in the app's directory to run your web app locally.
+3. Run the following command in the app's directory to run your web app locally.\
     `python run.py`
 
-3. Go to http://0.0.0.0:3001/
+4. Go to http://0.0.0.0:3001/
 
 ## Project Components
 There are three components of this project.
@@ -88,6 +94,11 @@ results for a message entered by the user.
 
 This folder contains screenshots of the data visualizations as appeared on the 
 index of the web app.
+
+### Utils
+When deploying on a web server, the pickling and unpickling required same
+`tokenize` function. The `utils` module contains tokenizer 
+function so that the app gets successfully deployed over a remote server. 
 
 ## Project Structure
 
